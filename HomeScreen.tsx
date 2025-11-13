@@ -1,15 +1,8 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, FlatList, StyleSheet } from 'react-native';
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
-
-interface MenuItem {
-  id: number;
-  name: string;
-  description: string;
-  course: string;
-  price: number;
-  available: boolean;
-}
+import { MenuItem } from './types';
+import { calculateAveragePricePerCourse } from './utils';
 
 interface HomeScreenProps {
   username: string;
@@ -21,6 +14,7 @@ interface HomeScreenProps {
 export default function HomeScreen({ username, menuItems, filteredCourses, setCurrentScreen }: HomeScreenProps) {
   const displayedItems = menuItems.filter(item => filteredCourses.includes(item.course));
   const totalItems = displayedItems.length;
+  const averagePrices = calculateAveragePricePerCourse(displayedItems);
 
   const renderMenuItem = ({ item }: { item: MenuItem }) => (
     <View style={styles.menuItem}>
@@ -53,6 +47,11 @@ export default function HomeScreen({ username, menuItems, filteredCourses, setCu
         <View>
           <Text style={styles.headerTitle}>Hello, {username}! 👋</Text>
           <Text style={styles.headerSubtitle}>Total Menu Items: {totalItems}</Text>
+          {averagePrices.map(avg => (
+            <Text key={avg.course} style={styles.averagePriceText}>
+              Avg {avg.course}: R{avg.average.toFixed(2)}
+            </Text>
+          ))}
         </View>
         <TouchableOpacity
           onPress={() => setCurrentScreen('filter')}
@@ -115,6 +114,11 @@ const styles = StyleSheet.create({
   headerSubtitle: {
     fontSize: 16,
     color: 'gray',
+  },
+  averagePriceText: {
+    fontSize: 14,
+    color: 'orange',
+    fontWeight: 'bold',
   },
   filterButton: {
     padding: 10,

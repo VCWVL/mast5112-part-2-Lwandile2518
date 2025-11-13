@@ -1,15 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, FlatList, Modal, TextInput, Alert, StyleSheet } from 'react-native';
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
-
-interface MenuItem {
-  id: number;
-  name: string;
-  description: string;
-  course: string;
-  price: number;
-  available: boolean;
-}
+import { MenuItem } from './types';
 
 interface MenuManagementScreenProps {
   menuItems: MenuItem[];

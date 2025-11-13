@@ -5,16 +5,7 @@ import LoginScreen from './LoginScreen';
 import HomeScreen from './HomeScreen';
 import FilterScreen from './FilterScreen';
 import MenuManagementScreen from './MenuManagementScreen';
-
-// Define types for the context
-interface MenuItem {
-  id: number;
-  name: string;
-  description: string;
-  course: string;
-  price: number;
-  available: boolean;
-}
+import { MenuItem } from './types';
 
 // Main App Component
 export default function ChefMenuApp() {
